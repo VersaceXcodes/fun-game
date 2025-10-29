@@ -1,0 +1,15 @@
+{
+  "timestamp": 1761291395184,
+  "operation": {
+    "id": "db:postgres"
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/backend/db.sql",
+      "type": "text",
+      "size": 2214,
+      "dependencies": false
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "timestamp": 1761291550124,
+  "operation": {
+    "id": "backend:specifications:openapi"
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/backend/openapi.yaml",
+      "type": "text",
+      "size": 8730,
+      "dependencies": false
+    }
+  ]
+}

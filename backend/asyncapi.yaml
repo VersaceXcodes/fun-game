@@ -1,0 +1,280 @@
+asyncapi: 2.0.0
+info:
+  title: Fun-Game Realtime API Specification
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    protocol: websocket
+    description: Development server for realtime communication
+channels:
+  user/auth:
+    subscribe:
+      summary: User authentication success event
+      message:
+        payload:
+          $ref: "#/components/schemas/UserEntity"
+  user/logout:
+    subscribe:
+      summary: User logout event
+      message:
+        payload:
+          $ref: "#/components/schemas/UserEntity"
+  user/profile/update:
+    subscribe:
+      summary: User profile update event
+      message:
+        payload:
+          $ref: "#/components/schemas/UserEntity"
+  game/lobby/leaderboard:
+    subscribe:
+      summary: Realtime leaderboard update
+      message:
+        payload:
+          type: array
+          items:
+            $ref: "#/components/schemas/LeaderboardEntry"
+  game/lobby/settings/update:
+    subscribe:
+      summary: User settings update event
+      message:
+        payload:
+          $ref: "#/components/schemas/UserSettings"
+  game/play/state:
+    subscribe:
+      summary: Realtime game state update
+      message:
+        payload:
+          $ref: "#/components/schemas/GamePlayState"
+  game/play/over:
+    subscribe:
+      summary: Game over event
+      message:
+        payload:
+          $ref: "#/components/schemas/GameResult"
+  game/play/powerup/used:
+    subscribe:
+      summary: Power-up usage event
+      message:
+        payload:
+          $ref: "#/components/schemas/PowerUpUsage"
+  game/results/share:
+    subscribe:
+      summary: Score sharing request event
+      message:
+        payload:
+          $ref: "#/components/schemas/ShareRequest"
+  game/progress/badge/unlock:
+    subscribe:
+      summary: Badge unlock event
+      message:
+        payload:
+          $ref: "#/components/schemas/BadgeUnlock"
+  game/progress/level/update:
+    subscribe:
+      summary: Level progression event
+      message:
+        payload:
+          $ref: "#/components/schemas/LevelProgress"
+  error/connection/lost:
+    subscribe:
+      summary: Connection lost event
+      message:
+        payload:
+          $ref: "#/components/schemas/ErrorEvent"
+  error/invalid/move:
+    subscribe:
+      summary: Invalid move detection event
+      message:
+        payload:
+          $ref: "#/components/schemas/ErrorEvent"
+components:
+  schemas:
+    UserEntity:
+      type: object
+      required:
+        - id
+        - username
+        - email
+        - password_hash
+        - created_at
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        password_hash:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    LeaderboardEntry:
+      type: object
+      required:
+        - user_id
+        - score
+        - rank
+      properties:
+        user_id:
+          type: string
+        username:
+          type: string
+        score:
+          type: integer
+        rank:
+          type: integer
+    UserSettings:
+      type: object
+      required:
+        - volume_level
+        - sound_effects_enabled
+        - default_difficulty
+      properties:
+        volume_level:
+          type: integer
+        sound_effects_enabled:
+          type: boolean
+        default_difficulty:
+          type: string
+    GamePlayState:
+      type: object
+      required:
+        - game_id
+        - user_id
+        - board
+        - timer
+        - score
+        - power_ups
+      properties:
+        game_id:
+          type: string
+        user_id:
+          type: string
+        board:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              color:
+                type: string
+              position:
+                type: object
+                properties:
+                  row:
+                    type: integer
+                  col:
+                    type: integer
+        timer:
+          $ref: "#/components/schemas/Timer"
+        score:
+          type: integer
+        power_ups:
+          type: array
+          items:
+            $ref: "#/components/schemas/PowerUp"
+    Timer:
+      type: object
+      required:
+        - remaining_seconds
+        - is_running
+      properties:
+        remaining_seconds:
+          type: integer
+        is_running:
+          type: boolean
+    PowerUp:
+      type: object
+      required:
+        - type
+        - available
+      properties:
+        type:
+          type: string
+          enum:
+            - shuffle
+            - freeze
+        available:
+          type: boolean
+    GameResult:
+      type: object
+      required:
+        - final_score
+        - time_remaining
+        - power_ups_used
+      properties:
+        final_score:
+          type: integer
+        time_remaining:
+          type: integer
+        power_ups_used:
+          type: array
+          items:
+            $ref: "#/components/schemas/PowerUpUsage"
+    PowerUpUsage:
+      type: object
+      required:
+        - type
+        - timestamp
+      properties:
+        type:
+          type: string
+          enum:
+            - shuffle
+            - freeze
+        timestamp:
+          type: string
+          format: date-time
+    ShareRequest:
+      type: object
+      required:
+        - score
+        - message
+      properties:
+        score:
+          type: integer
+        message:
+          type: string
+    BadgeUnlock:
+      type: object
+      required:
+        - badge_id
+        - badge_name
+        - unlock_time
+      properties:
+        badge_id:
+          type: string
+        badge_name:
+          type: string
+        unlock_time:
+          type: string
+          format: date-time
+    LevelProgress:
+      type: object
+      required:
+        - level_id
+        - level_name
+        - progress_percentage
+      properties:
+        level_id:
+          type: string
+        level_name:
+          type: string
+        progress_percentage:
+          type: integer
+    ErrorEvent:
+      type: object
+      required:
+        - error_code
+        - error_message
+        - timestamp
+      properties:
+        error_code:
+          type: string
+        error_message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time

@@ -1,0 +1,21 @@
+{
+  "timestamp": 1761291836335,
+  "operation": {
+    "id": "backend:tests:main"
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/backend/server.test.ts",
+      "type": "text",
+      "size": 5706,
+      "dependencies": false
+    },
+    {
+      "path": "/mnt/data/fun-game/backend/jest.config.ts",
+      "type": "text",
+      "size": 280,
+      "dependencies": false
+    }
+  ]
+}

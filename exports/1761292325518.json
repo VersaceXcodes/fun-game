@@ -1,0 +1,19 @@
+{
+  "timestamp": 1761292325518,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "UV_Profile",
+      "version": "1761292252411"
+    }
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/vitereact/src/components/views/UV_Profile.tsx",
+      "type": "text",
+      "size": 14604,
+      "dependencies": false
+    }
+  ]
+}

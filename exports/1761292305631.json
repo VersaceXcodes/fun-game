@@ -1,0 +1,19 @@
+{
+  "timestamp": 1761292305631,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "UV_Privacy",
+      "version": "1761292261712"
+    }
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/vitereact/src/components/views/UV_Privacy.tsx",
+      "type": "text",
+      "size": 4012,
+      "dependencies": false
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "timestamp": 1761292093549,
+  "operation": {
+    "id": "webapp:react:root",
+    "refs": {
+      "id": "app",
+      "version": "latest"
+    }
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/vitereact/src/App.tsx",
+      "type": "text",
+      "size": 4607,
+      "dependencies": false
+    }
+  ]
+}

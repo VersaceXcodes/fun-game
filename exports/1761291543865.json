@@ -1,0 +1,15 @@
+{
+  "timestamp": 1761291543865,
+  "operation": {
+    "id": "backend:specifications:asyncapi"
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/backend/asyncapi.yaml",
+      "type": "text",
+      "size": 6332,
+      "dependencies": false
+    }
+  ]
+}

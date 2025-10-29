@@ -1,0 +1,19 @@
+{
+  "timestamp": 1761292439938,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "GV_TopNavigation",
+      "version": "latest"
+    }
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/vitereact/src/components/views/GV_TopNavigation.tsx",
+      "type": "text",
+      "size": 7185,
+      "dependencies": false
+    }
+  ]
+}

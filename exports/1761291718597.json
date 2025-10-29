@@ -1,0 +1,15 @@
+{
+  "timestamp": 1761291718597,
+  "operation": {
+    "id": "backend:server:main"
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/backend/server.ts",
+      "type": "text",
+      "size": 23940,
+      "dependencies": false
+    }
+  ]
+}

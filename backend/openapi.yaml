@@ -1,0 +1,361 @@
+>-
+```yaml
+
+openapi: 3.0.0
+
+info:
+  title: Fun-Game API Specification
+  version: 1.0.0
+  description: User-facing API for the Fun-Game application
+servers:
+  - url: http://localhost:3000/api
+    description: Development server
+
+components:
+  schemas:
+    UserEntity:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        password_hash:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required: [id, username, email, password_hash, created_at]
+
+    CreateUserInput:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password_hash:
+          type: string
+      required: [username, email, password_hash]
+
+    UpdateUserInput:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password_hash:
+          type: string
+      required: []
+
+    SearchUsersInput:
+      type: object
+      properties:
+        query:
+          type: string
+        limit:
+          type: integer
+        offset:
+          type: integer
+        sort_by:
+          type: string
+          enum: [username, email, created_at]
+        sort_order:
+          type: string
+          enum: [asc, desc]
+      required: []
+
+    AuthResponse:
+      type: object
+      properties:
+        auth_token:
+          type: string
+        user:
+          $ref: '#/components/schemas/UserEntity'
+
+    GameSession:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        difficulty:
+          type: string
+          enum: [easy, normal, hard]
+        score:
+          type: integer
+        time_remaining:
+          type: integer
+        power_ups:
+          type: array
+          items:
+            type: string
+            enum: [shuffle, freeze]
+        created_at:
+          type: string
+          format: date-time
+      required: [id, user_id, difficulty, score, time_remaining, power_ups, created_at]
+
+    LeaderboardEntry:
+      type: object
+      properties:
+        user_id:
+          type: string
+        username:
+          type: string
+        score:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+
+    ShareRequest:
+      type: object
+      properties:
+        score:
+          type: integer
+        platform:
+          type: string
+          enum: [twitter, facebook]
+
+  parameters:
+    UserIdParam:
+      name: user_id
+      in: path
+      description: User identifier
+      schema:
+        type: string
+
+    GameIdParam:
+      name: game_id
+      in: path
+      description: Game session identifier
+      schema:
+        type: string
+
+    LeaderboardTypeQuery:
+      name: leaderboard_type
+      in: query
+      description: Leaderboard filter (daily/weekly/all_time)
+      schema:
+        type: string
+        enum: [daily, weekly, all_time]
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+paths:
+  /auth/register:
+    post:
+      summary: Create new user account
+      operationId: CreateUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserInput'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+  /auth/login:
+    post:
+      summary: Authenticate user
+      operationId: LoginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            properties:
+              email:
+                type: string
+              password_hash:
+                type: string
+            required: [email, password_hash]
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+  /users:
+    get:
+      summary: Search users
+      operationId: SearchUsers
+      parameters:
+        - $ref: '#/components/parameters/SearchUsersInput'
+      responses:
+        '200':
+          description: User search results
+          content:
+            application/json:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserEntity'
+
+    /{user_id}:
+      get:
+        summary: Get user profile
+        operationId: GetUserProfile
+        parameters:
+          - $ref: '#/components/parameters/UserIdParam'
+        responses:
+          '200':
+            description: User profile data
+            content:
+              application/json:
+                $ref: '#/components/schemas/UserEntity'
+
+      put:
+        summary: Update user profile
+        operationId: UpdateUserProfile
+        security:
+          - bearerAuth: []
+        parameters:
+          - $ref: '#/components/parameters/UserIdParam'
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserInput'
+        responses:
+          '200':
+            description: User profile updated
+            content:
+              application/json:
+                $ref: '#/components/schemas/UserEntity'
+
+      delete:
+        summary: Delete user account
+        operationId: DeleteUser
+        security:
+          - bearerAuth: []
+        parameters:
+          - $ref: '#/components/parameters/UserIdParam'
+        responses:
+          '204':
+            description: User account deleted
+
+  /games:
+    post:
+      summary: Start new game session
+      operationId: CreateGame
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                difficulty:
+                  type: string
+                  enum: [easy, normal, hard]
+              required: [difficulty]
+      responses:
+        '201':
+          description: Game session created
+          content:
+            application/json:
+              $ref: '#/components/schemas/GameSession'
+
+    /{game_id}:
+      get:
+        summary: Get game state
+        operationId: GetGamestate
+        parameters:
+          - $ref: '#/components/parameters/GameIdParam'
+        responses:
+          '200':
+            description: Current game state
+            content:
+              application/json:
+                $ref: '#/components/schemas/GameSession'
+
+      put:
+        summary: Update game state
+        operationId: UpdateGamestate
+        security:
+          - bearerAuth: []
+        parameters:
+          - $ref: '#/components/parameters/GameIdParam'
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  move:
+                    type: object
+                    properties:
+                      from:
+                        type: string
+                      to:
+                        type: string
+                  power_up:
+                    type: string
+                    enum: [shuffle, freeze]
+                required: []
+        responses:
+          '200':
+            description: Game state updated
+            content:
+              application/json:
+                $ref: '#/components/schemas/GameSession'
+
+  /leaderboard:
+    get:
+      summary: Retrieve leaderboard data
+      operationId: GetLeaderboard
+      parameters:
+        - $ref: '#/components/parameters/LeaderboardTypeQuery'
+      responses:
+        '200':
+          description: Leaderboard entries
+          content:
+            application/json:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardEntry'
+
+  /shares:
+    post:
+      summary: Share game results
+      operationId: ShareResult
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShareRequest'
+      responses:
+        '202':
+          description: Share request accepted
+
+  /websocket:
+    get:
+      summary: WebSocket endpoint for real-time updates
+      operationId: ConnectWebSocket
+      description: Maintains real-time connection for leaderboard updates
+      responses:
+        '101':
+          description: Switching protocols to WebSocket

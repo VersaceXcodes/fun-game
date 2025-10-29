@@ -1,0 +1,19 @@
+{
+  "timestamp": 1761292361350,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "GV_Footer",
+      "version": "latest"
+    }
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/vitereact/src/components/views/GV_Footer.tsx",
+      "type": "text",
+      "size": 3448,
+      "dependencies": false
+    }
+  ]
+}

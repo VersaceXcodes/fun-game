@@ -1,0 +1,15 @@
+{
+  "timestamp": 1761291465886,
+  "operation": {
+    "id": "db:schemas:zod"
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/backend/schema.ts",
+      "type": "text",
+      "size": 3918,
+      "dependencies": false
+    }
+  ]
+}

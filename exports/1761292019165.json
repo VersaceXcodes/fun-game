@@ -1,0 +1,15 @@
+{
+  "timestamp": 1761292019165,
+  "operation": {
+    "id": "settings:config:package"
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/vitereact/package.json",
+      "type": "text",
+      "size": 2980,
+      "dependencies": true
+    }
+  ]
+}

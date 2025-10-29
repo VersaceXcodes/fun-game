@@ -1,0 +1,15 @@
+{
+  "timestamp": 1761291838420,
+  "operation": {
+    "id": "settings:config:package"
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/backend/package.json",
+      "type": "text",
+      "size": 1447,
+      "dependencies": true
+    }
+  ]
+}

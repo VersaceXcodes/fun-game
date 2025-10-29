@@ -1,0 +1,19 @@
+{
+  "timestamp": 1761292367555,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "UV_Authentication",
+      "version": "latest"
+    }
+  },
+  "projectId": "fun-game",
+  "files": [
+    {
+      "path": "/mnt/data/fun-game/vitereact/src/components/views/UV_Authentication.tsx",
+      "type": "text",
+      "size": 8054,
+      "dependencies": false
+    }
+  ]
+}
